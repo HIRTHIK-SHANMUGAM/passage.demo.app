@@ -123,7 +123,7 @@ function FilterChipDropdown({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 z-30 mt-2 w-48 rounded-card border border-hairline bg-ink-2 py-1 shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+            className="absolute left-0 z-30 mt-2 w-48 rounded-card border border-hairline bg-ink-2 py-1 shadow-[0_12px_32px_rgba(22,35,63,0.16)]"
           >
             {def.options.map((o) => (
               <label key={o} className="flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm text-parchment hover:bg-ink-3">

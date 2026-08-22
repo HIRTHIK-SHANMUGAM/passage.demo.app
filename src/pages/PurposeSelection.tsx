@@ -8,12 +8,13 @@ import { TRACKS } from '@/lib/tracks';
 import * as db from '@/lib/db';
 import { LogoFull } from '@/components/Logo';
 import { ShinyText, TiltCard } from '@/components/effects';
+import Silk from '@/components/Silk';
 
-const CARDS: { track: Track; icon: typeof Briefcase; title: string; body: string }[] = [
-  { track: 'jobs', icon: Briefcase, title: 'Find a job', body: 'Search open roles, match by AI, apply with verified credentials.' },
-  { track: 'studies', icon: GraduationCap, title: 'Apply for higher studies', body: 'Build a realistic shortlist, plan your exams, apply with proof.' },
-  { track: 'hiring', icon: Building2, title: "I'm hiring", body: 'Post roles and screen applicants whose records verify in a second.' },
-  { track: 'admissions', icon: Landmark, title: "I'm admitting students", body: 'Review applicants, issue credentials, verify transcripts instantly.' },
+const CARDS: { track: Track; icon: typeof Briefcase; title: string; body: string; accent: string }[] = [
+  { track: 'jobs', icon: Briefcase, title: 'Find a job', body: 'Search open roles, match by AI, apply with verified credentials.', accent: '#2563EB' },
+  { track: 'studies', icon: GraduationCap, title: 'Apply for higher studies', body: 'Build a realistic shortlist, plan your exams, apply with proof.', accent: '#7C3AED' },
+  { track: 'hiring', icon: Building2, title: "I'm hiring", body: 'Post roles and screen applicants whose records verify in a second.', accent: '#0D9488' },
+  { track: 'admissions', icon: Landmark, title: "I'm admitting students", body: 'Review applicants, issue credentials, verify transcripts instantly.', accent: '#E75C2B' },
 ];
 
 export default function PurposeSelection() {
@@ -48,15 +49,18 @@ export default function PurposeSelection() {
   }
 
   return (
-    <div className="min-h-screen bg-ink">
-      <div className="mx-auto flex max-w-4xl flex-col items-center px-6 py-12">
+    <div className="relative min-h-screen overflow-hidden">
+      {/* blue silk backdrop — only this page and the login page get it */}
+      <Silk color="#2F4FA8" speed={5} scale={1} noiseIntensity={1.2} />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#101b3a]/40" />
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 py-12">
         <div className="mb-2 flex w-full items-center justify-between">
           <LogoFull markSize={32} />
           <button
             onClick={() => {
               void signOut();
             }}
-            className="flex items-center gap-1.5 text-xs text-slate transition-colors hover:text-parchment"
+            className="flex items-center gap-1.5 text-xs text-white/70 transition-colors hover:text-white"
           >
             <LogOut size={14} /> Sign out
           </button>
@@ -68,7 +72,7 @@ export default function PurposeSelection() {
           transition={{ type: 'spring', duration: 0.5 }}
           className="mt-10 w-full text-center"
         >
-          <h1 className="font-display text-3xl font-semibold text-parchment md:text-4xl">
+          <h1 className="font-display text-3xl font-semibold text-white md:text-4xl">
             What brings you here,{' '}
             <ShinyText
               text={profile?.full_name ? profile.full_name.split(' ')[0] : 'traveller'}
@@ -76,10 +80,10 @@ export default function PurposeSelection() {
             />
             ?
           </h1>
-          <p className="mt-2 text-sm text-slate">Pick a path. You can switch any time from the top bar.</p>
+          <p className="mt-2 text-sm text-white/75">Pick a path. You can switch any time from the top bar.</p>
 
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {CARDS.map(({ track, icon: Icon, title, body }, idx) => (
+            {CARDS.map(({ track, icon: Icon, title, body, accent }, idx) => (
               <motion.div
                 key={track}
                 initial={{ opacity: 0, y: 12 }}
@@ -89,10 +93,13 @@ export default function PurposeSelection() {
                 <TiltCard amplitude={7} scaleOnHover={1.03} className="h-full">
                   <button
                     onClick={() => choose(track)}
-                    className="card-surface group h-full w-full p-7 text-left transition-colors duration-300 hover:border-orange/50 hover:shadow-[0_14px_36px_rgba(0,0,0,0.4)]"
+                    className="card-surface group h-full w-full p-7 text-left transition-colors duration-300 hover:border-orange/50 hover:shadow-[0_14px_36px_rgba(22,35,63,0.14)]"
                   >
-                    <div className="icon-chip mb-4 flex h-11 w-11 items-center justify-center rounded-btn">
-                      <Icon size={22} className="text-orange" />
+                    <div
+                      className="icon-chip mb-4 flex h-11 w-11 items-center justify-center rounded-btn"
+                      style={{ '--chip': accent } as React.CSSProperties}
+                    >
+                      <Icon size={22} />
                     </div>
                     <h2 className="font-display text-xl font-semibold text-parchment">{title}</h2>
                     <p className="mt-1.5 text-sm text-slate">{body}</p>

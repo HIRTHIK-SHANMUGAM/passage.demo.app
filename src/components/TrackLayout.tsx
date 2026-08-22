@@ -51,7 +51,7 @@ function TrackSwitcher() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 z-40 mt-2 w-48 overflow-hidden rounded-card border border-hairline bg-ink-2 py-1 shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+            className="absolute right-0 z-40 mt-2 w-48 overflow-hidden rounded-card border border-hairline bg-ink-2 py-1 shadow-[0_12px_32px_rgba(22,35,63,0.16)]"
             role="menu"
           >
             <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider text-slate-2">Switch track</div>
@@ -105,7 +105,7 @@ function AvatarMenu() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-card border border-hairline bg-ink-2 py-1 shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+            className="absolute right-0 z-40 mt-2 w-56 overflow-hidden rounded-card border border-hairline bg-ink-2 py-1 shadow-[0_12px_32px_rgba(22,35,63,0.16)]"
             role="menu"
           >
             <div className="border-b border-hairline px-3 py-2">
@@ -188,7 +188,7 @@ function InstitutionSwitcher() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 z-40 mt-2 max-h-72 w-60 overflow-y-auto rounded-card border border-hairline bg-ink-2 py-1 shadow-[0_12px_32px_rgba(0,0,0,0.5)] thin-scroll"
+            className="absolute right-0 z-40 mt-2 max-h-72 w-60 overflow-y-auto rounded-card border border-hairline bg-ink-2 py-1 shadow-[0_12px_32px_rgba(22,35,63,0.16)] thin-scroll"
             role="menu"
           >
             {options.map((o) => (

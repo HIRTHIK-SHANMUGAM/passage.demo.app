@@ -239,7 +239,7 @@ export default function Postings() {
                 onClick={() =>
                   navigate('/hiring/applicants', { state: { jobPostingId: j.id, targetName: j.title } })
                 }
-                className="card-surface flex w-full flex-wrap items-center justify-between gap-3 p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(0,0,0,0.35)]"
+                className="card-surface flex w-full flex-wrap items-center justify-between gap-3 p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(22,35,63,0.12)]"
               >
                 <div>
                   <div className="font-display text-lg font-semibold text-parchment">{j.title}</div>

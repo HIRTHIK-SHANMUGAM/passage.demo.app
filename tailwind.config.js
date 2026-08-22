@@ -15,10 +15,13 @@ export default {
         red: 'var(--red)',
         slate: 'var(--slate)',
         'slate-2': 'var(--slate-2)',
+        blue: 'var(--blue)',
+        violet: 'var(--violet)',
+        teal: 'var(--teal)',
       },
       borderColor: {
-        hairline: 'rgba(246,241,227,0.10)',
-        'hairline-strong': 'rgba(246,241,227,0.18)',
+        hairline: 'var(--hairline)',
+        'hairline-strong': 'var(--hairline-strong)',
       },
       fontFamily: {
         display: ['Fraunces', 'Georgia', 'serif'],

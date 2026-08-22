@@ -79,7 +79,7 @@ export function Card({
   return (
     <div
       onClick={onClick}
-      className={`card-surface ${hover ? 'transition-all duration-300 hover:-translate-y-1.5 hover:border-orange/40 hover:shadow-[0_14px_36px_rgba(0,0,0,0.4)]' : ''} ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`card-surface ${hover ? 'transition-all duration-300 hover:-translate-y-1.5 hover:border-orange/40 hover:shadow-[0_14px_36px_rgba(22,35,63,0.14)]' : ''} ${onClick ? 'cursor-pointer' : ''} ${className}`}
     >
       {children}
     </div>
@@ -322,7 +322,7 @@ export function EmptyState({
   return (
     <div className="card-surface group flex flex-col items-center justify-center gap-3 px-6 py-14 text-center">
       <div className="icon-chip flex h-14 w-14 items-center justify-center rounded-full">
-        <Icon size={24} className="text-orange" />
+        <Icon size={24} />
       </div>
       <h3 className="font-display text-lg text-parchment">{title}</h3>
       {body && <p className="max-w-sm text-sm text-slate">{body}</p>}
@@ -355,14 +355,14 @@ export function ErrorState({
 /* ---------- Avatar circle ---------- */
 
 const avatarPalette = [
-  '#2E7D6B',
-  '#7A4E8C',
-  '#4E6E8C',
-  '#8C6B4E',
-  '#B04A6E',
-  '#4E8C55',
-  '#8C4E4E',
-  '#4E5E8C',
+  '#2563EB', // blue-600
+  '#7C3AED', // violet-600
+  '#0D9488', // teal-600
+  '#DB2777', // pink-600
+  '#D97706', // amber-600
+  '#059669', // emerald-600
+  '#4F46E5', // indigo-600
+  '#0284C7', // sky-600
 ];
 
 export function AvatarCircle({
@@ -428,7 +428,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.97 }}
                 transition={{ type: 'spring', duration: 0.35, bounce: 0.3 }}
-                className="rounded-full border border-hairline-strong bg-ink-3 px-5 py-2.5 text-sm text-parchment shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
+                className="rounded-full border border-hairline-strong bg-ink-3 px-5 py-2.5 text-sm text-parchment shadow-[0_8px_24px_rgba(22,35,63,0.16)]"
               >
                 {t.message}
               </motion.div>

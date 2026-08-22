@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { DEV_CODE, getSession, isDevAuth, signInWithEmail, verifyCode } from '@/lib/auth';
 import { LogoMark } from '@/components/Logo';
 import { ShinyText } from '@/components/effects';
+import Silk from '@/components/Silk';
 import { Button, Input } from '@/components/ui';
 
 type Step = 'email' | 'code';
@@ -103,12 +104,14 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-ink p-6">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-6">
+      {/* blue silk backdrop — only this page and purpose selection get it */}
+      <Silk color="#2F4FA8" speed={5} scale={1} noiseIntensity={1.2} />
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', duration: 0.5 }}
-        className="w-full max-w-sm"
+        className="relative z-10 w-full max-w-sm"
       >
         <div className="mb-8 flex flex-col items-center gap-4 text-center">
           <LogoMark size={96} />
@@ -117,7 +120,7 @@ export default function Login() {
             speed={4}
             className="font-display text-4xl font-semibold tracking-wide"
           />
-          <p className="text-[10px] uppercase tracking-[0.24em] text-slate">
+          <p className="text-[10px] uppercase tracking-[0.24em] text-white/80">
             Your records. Your access. Verified instantly.
           </p>
         </div>
