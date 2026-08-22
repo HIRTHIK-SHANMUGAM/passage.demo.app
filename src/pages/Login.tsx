@@ -2,7 +2,8 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { DEV_CODE, getSession, isDevAuth, signInWithEmail, verifyCode } from '@/lib/auth';
-import { LogoMark, LogoWordmark } from '@/components/Logo';
+import { LogoMark } from '@/components/Logo';
+import { ShinyText } from '@/components/effects';
 import { Button, Input } from '@/components/ui';
 
 type Step = 'email' | 'code';
@@ -111,7 +112,11 @@ export default function Login() {
       >
         <div className="mb-8 flex flex-col items-center gap-4 text-center">
           <LogoMark size={96} />
-          <LogoWordmark className="text-4xl" />
+          <ShinyText
+            text="Passage"
+            speed={4}
+            className="font-display text-4xl font-semibold tracking-wide"
+          />
           <p className="text-[10px] uppercase tracking-[0.24em] text-slate">
             Your records. Your access. Verified instantly.
           </p>

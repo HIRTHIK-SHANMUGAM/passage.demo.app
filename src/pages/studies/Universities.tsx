@@ -396,14 +396,20 @@ export default function Universities() {
             />
           ) : (
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-              {filtered.map((p) => {
+              {filtered.map((p, idx) => {
                 const uni = db.getInstitutionSync(p.institution_id)!;
                 const tier = tierMeta(p.acceptance_tier);
                 const onList = shortlistedProgramIds.has(p.id);
                 return (
-                  <Card key={p.id} hover className="flex flex-col p-5">
+                  <motion.div
+                    key={p.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: Math.min(idx * 0.05, 0.4), duration: 0.3 }}
+                  >
+                  <Card hover className="flex h-full flex-col p-5">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-orange/40 font-display text-sm font-semibold text-orange">
+                      <div className="seal-circle flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-orange/40 font-display text-sm font-semibold text-orange">
                         {uni.initials}
                       </div>
                       <div className="min-w-0">
@@ -446,6 +452,7 @@ export default function Universities() {
                       </Button>
                     </div>
                   </Card>
+                  </motion.div>
                 );
               })}
             </div>

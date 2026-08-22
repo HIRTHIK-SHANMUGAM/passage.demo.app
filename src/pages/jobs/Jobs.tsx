@@ -501,12 +501,15 @@ export default function Jobs() {
               action={<Button variant="secondary" onClick={clearAll}>Clear filters</Button>}
             />
           ) : (
-            filtered.map((j) => {
+            filtered.map((j, idx) => {
               const company = db.getInstitutionSync(j.institution_id);
               const isSel = selected?.id === j.id;
               return (
-                <button
+                <motion.button
                   key={j.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: Math.min(idx * 0.04, 0.35), duration: 0.3 }}
                   onClick={() => {
                     setSelectedId(j.id);
                     setMobileDetail(true);
@@ -533,7 +536,7 @@ export default function Jobs() {
                       </div>
                     </div>
                   </div>
-                </button>
+                </motion.button>
               );
             })
           )}

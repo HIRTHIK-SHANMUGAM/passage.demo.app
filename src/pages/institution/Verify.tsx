@@ -7,6 +7,7 @@ import * as db from '@/lib/db';
 import { Credential } from '@/lib/types';
 import { askAboutCredential } from '@/lib/ai';
 import { Button, Eyebrow, PageTitle, useToast } from '@/components/ui';
+import { StarBorder } from '@/components/effects';
 
 interface VerifyOutcome {
   result: 'authentic' | 'mismatch';
@@ -293,9 +294,11 @@ export default function Verify() {
             Try a forged credential
           </button>
           <div className="flex-1" />
-          <Button onClick={() => void runVerification(input)} disabled={!input.trim() || checking}>
-            Verify now
-          </Button>
+          <StarBorder>
+            <Button onClick={() => void runVerification(input)} disabled={!input.trim() || checking}>
+              Verify now
+            </Button>
+          </StarBorder>
         </div>
       </div>
 

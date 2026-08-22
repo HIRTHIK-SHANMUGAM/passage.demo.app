@@ -17,6 +17,7 @@ import {
   SkeletonRows,
   useToast,
 } from '@/components/ui';
+import { CountUp } from '@/components/effects';
 
 export const DOC_TYPES: { key: string; label: string; hint: string; multi?: number }[] = [
   { key: 'transcript', label: 'Transcript', hint: 'Your signed academic record — attached automatically from your vault.' },
@@ -246,7 +247,9 @@ export default function StudyApplications() {
           ['Decision pending', stats.pending],
         ].map(([label, n]) => (
           <div key={label as string} className="card-surface p-4">
-            <div className="font-display text-2xl font-semibold text-parchment">{n}</div>
+            <div className="font-display text-2xl font-semibold text-parchment">
+              <CountUp to={n as number} />
+            </div>
             <div className="text-xs text-slate">{label}</div>
           </div>
         ))}

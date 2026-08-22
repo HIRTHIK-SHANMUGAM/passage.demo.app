@@ -27,6 +27,7 @@ export function LogoMark({ size = 40, className = '' }: MarkProps) {
         <path d="M 26 47 L 26 31 A 6 6 0 0 1 38 31 L 38 47" strokeWidth={1.2} />
         {/* sparkle at the threshold */}
         <path
+          className="logo-sparkle"
           d="M 32 37.5 l 1.3 2.7 l 2.7 1.3 l -2.7 1.3 l -1.3 2.7 l -1.3 -2.7 l -2.7 -1.3 l 2.7 -1.3 z"
           fill="var(--orange)"
           stroke="none"
@@ -64,7 +65,7 @@ export function LogoFull({ markSize = 34, tagline = false, className = '' }: Ful
       {/* thin vertical divider with a sparkle at its midpoint */}
       <svg width="10" height={markSize + 6} viewBox="0 0 10 44" fill="none" aria-hidden="true">
         <line x1="5" y1="2" x2="5" y2="17" stroke="var(--orange)" strokeWidth="1" opacity="0.7" />
-        <path d="M 5 19 l 1.2 2.5 l 2.5 1.2 l -2.5 1.2 l -1.2 2.5 l -1.2 -2.5 l -2.5 -1.2 l 2.5 -1.2 z" fill="var(--orange)" />
+        <path className="logo-sparkle" d="M 5 19 l 1.2 2.5 l 2.5 1.2 l -2.5 1.2 l -1.2 2.5 l -1.2 -2.5 l -2.5 -1.2 l 2.5 -1.2 z" fill="var(--orange)" />
         <line x1="5" y1="28" x2="5" y2="42" stroke="var(--orange)" strokeWidth="1" opacity="0.7" />
       </svg>
       <div>

@@ -16,6 +16,7 @@ import {
   PillTone,
   SkeletonRows,
 } from '@/components/ui';
+import { CountUp } from '@/components/effects';
 
 const STATUS_META: Record<ApplicationStatus, { label: string; tone: PillTone }> = {
   shortlisted: { label: 'Shortlisted', tone: 'slate' },
@@ -111,7 +112,9 @@ export default function JobApplications() {
           ['Closed', stats.closed],
         ].map(([label, n]) => (
           <div key={label as string} className="card-surface p-4">
-            <div className="font-display text-2xl font-semibold text-parchment">{n}</div>
+            <div className="font-display text-2xl font-semibold text-parchment">
+              <CountUp to={n as number} />
+            </div>
             <div className="text-xs text-slate">{label}</div>
           </div>
         ))}

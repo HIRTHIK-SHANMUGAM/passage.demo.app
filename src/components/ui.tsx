@@ -79,7 +79,7 @@ export function Card({
   return (
     <div
       onClick={onClick}
-      className={`card-surface ${hover ? 'transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.35)]' : ''} ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`card-surface ${hover ? 'transition-all duration-300 hover:-translate-y-1.5 hover:border-orange/40 hover:shadow-[0_14px_36px_rgba(0,0,0,0.4)]' : ''} ${onClick ? 'cursor-pointer' : ''} ${className}`}
     >
       {children}
     </div>
@@ -320,9 +320,9 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="card-surface flex flex-col items-center justify-center gap-3 px-6 py-14 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-ink-3">
-        <Icon size={24} className="text-slate" />
+    <div className="card-surface group flex flex-col items-center justify-center gap-3 px-6 py-14 text-center">
+      <div className="icon-chip flex h-14 w-14 items-center justify-center rounded-full">
+        <Icon size={24} className="text-orange" />
       </div>
       <h3 className="font-display text-lg text-parchment">{title}</h3>
       {body && <p className="max-w-sm text-sm text-slate">{body}</p>}

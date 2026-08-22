@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppProvider, useApp } from '@/state/AppContext';
 import { ToastProvider } from '@/components/ui';
@@ -62,6 +62,20 @@ function Home() {
 }
 
 export default function App() {
+  // One delegate powers the cursor-tracking spotlight on every .card-surface
+  // (adapted from React Bits SpotlightCard).
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const card = (e.target as Element | null)?.closest?.('.card-surface') as HTMLElement | null;
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+    };
+    document.addEventListener('mousemove', onMove, { passive: true });
+    return () => document.removeEventListener('mousemove', onMove);
+  }, []);
+
   return (
     <ToastProvider>
       <AppProvider>

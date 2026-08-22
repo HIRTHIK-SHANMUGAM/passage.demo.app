@@ -7,6 +7,7 @@ import { Track } from '@/lib/types';
 import { TRACKS } from '@/lib/tracks';
 import * as db from '@/lib/db';
 import { LogoFull } from '@/components/Logo';
+import { ShinyText, TiltCard } from '@/components/effects';
 
 const CARDS: { track: Track; icon: typeof Briefcase; title: string; body: string }[] = [
   { track: 'jobs', icon: Briefcase, title: 'Find a job', body: 'Search open roles, match by AI, apply with verified credentials.' },
@@ -68,26 +69,36 @@ export default function PurposeSelection() {
           className="mt-10 w-full text-center"
         >
           <h1 className="font-display text-3xl font-semibold text-parchment md:text-4xl">
-            What brings you here{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}?
+            What brings you here,{' '}
+            <ShinyText
+              text={profile?.full_name ? profile.full_name.split(' ')[0] : 'traveller'}
+              className="font-display"
+            />
+            ?
           </h1>
           <p className="mt-2 text-sm text-slate">Pick a path. You can switch any time from the top bar.</p>
 
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {CARDS.map(({ track, icon: Icon, title, body }, idx) => (
-              <motion.button
+              <motion.div
                 key={track}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 * idx, type: 'spring', duration: 0.45 }}
-                onClick={() => choose(track)}
-                className="card-surface group p-7 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-orange/50 hover:shadow-[0_14px_36px_rgba(0,0,0,0.4)]"
               >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-btn bg-ink-3 transition-colors group-hover:bg-orange/15">
-                  <Icon size={22} className="text-orange" />
-                </div>
-                <h2 className="font-display text-xl font-semibold text-parchment">{title}</h2>
-                <p className="mt-1.5 text-sm text-slate">{body}</p>
-              </motion.button>
+                <TiltCard amplitude={7} scaleOnHover={1.03} className="h-full">
+                  <button
+                    onClick={() => choose(track)}
+                    className="card-surface group h-full w-full p-7 text-left transition-colors duration-300 hover:border-orange/50 hover:shadow-[0_14px_36px_rgba(0,0,0,0.4)]"
+                  >
+                    <div className="icon-chip mb-4 flex h-11 w-11 items-center justify-center rounded-btn">
+                      <Icon size={22} className="text-orange" />
+                    </div>
+                    <h2 className="font-display text-xl font-semibold text-parchment">{title}</h2>
+                    <p className="mt-1.5 text-sm text-slate">{body}</p>
+                  </button>
+                </TiltCard>
+              </motion.div>
             ))}
           </div>
         </motion.div>

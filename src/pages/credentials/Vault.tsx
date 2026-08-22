@@ -15,6 +15,7 @@ import { useApp } from '@/state/AppContext';
 import * as db from '@/lib/db';
 import { Credential, CredentialShare, CredentialType } from '@/lib/types';
 import { truncateHash } from '@/lib/hash';
+import { TiltCard } from '@/components/effects';
 import {
   Button,
   Card,
@@ -481,12 +482,19 @@ export default function Vault() {
             />
           </div>
         ) : (
-          credentials.map((c) => {
+          credentials.map((c, idx) => {
             const issuer = db.getInstitutionSync(c.issuing_institution_id);
             return (
-              <Card key={c.id} hover className="flex flex-col p-5">
+              <motion.div
+                key={c.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: Math.min(idx * 0.06, 0.35), duration: 0.3 }}
+              >
+              <TiltCard amplitude={6} className="h-full">
+              <Card className="flex h-full flex-col p-5">
                 <div className="mb-3 flex items-start justify-between">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-orange/40 font-display text-sm font-semibold text-orange">
+                  <div className="seal-circle flex h-10 w-10 items-center justify-center rounded-full border border-orange/40 font-display text-sm font-semibold text-orange">
                     {issuer?.initials}
                   </div>
                   <Pill tone="green"><ShieldCheck size={11} /> Verified</Pill>
@@ -504,6 +512,8 @@ export default function Vault() {
                   </Button>
                 </div>
               </Card>
+              </TiltCard>
+              </motion.div>
             );
           })
         )}
