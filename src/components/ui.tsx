@@ -103,17 +103,58 @@ export function Pill({
   tone = 'slate',
   children,
   className = '',
+  dot = false,
+  live = false,
 }: {
   tone?: PillTone;
   children: ReactNode;
   className?: string;
+  /** Leading status dot (Untitled UI BadgeWithDot pattern). */
+  dot?: boolean;
+  /** Adds a soft halo around the dot for "currently active" states. */
+  live?: boolean;
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap ${pillTones[tone]} ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap ${pillTones[tone]} ${className}`}
     >
+      {dot && <span className={`pill-dot ${live ? 'pill-dot-live' : ''}`} />}
       {children}
     </span>
+  );
+}
+
+/* ---------- StatCard (Untitled UI metrics pattern) ---------- */
+
+export function StatCard({
+  label,
+  value,
+  icon: Icon,
+  accent = 'var(--blue)',
+  hint,
+}: {
+  label: string;
+  value: ReactNode;
+  icon?: LucideIcon;
+  accent?: string;
+  hint?: string;
+}) {
+  return (
+    <div className="card-surface group p-4">
+      <div className="flex items-start justify-between gap-2">
+        <div className="text-xs font-medium text-slate">{label}</div>
+        {Icon && (
+          <span
+            className="featured-icon h-8 w-8"
+            style={{ '--chip': accent } as React.CSSProperties}
+          >
+            <Icon size={15} />
+          </span>
+        )}
+      </div>
+      <div className="mt-1 font-display text-2xl font-semibold text-parchment">{value}</div>
+      {hint && <div className="mt-0.5 text-[11px] text-slate-2">{hint}</div>}
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CheckCircle2, ChevronDown, Send } from 'lucide-react';
+import { Archive, CalendarCheck, CheckCircle2, ChevronDown, Eye, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/state/AppContext';
 import * as db from '@/lib/db';
@@ -15,6 +15,7 @@ import {
   Pill,
   PillTone,
   SkeletonRows,
+  StatCard,
 } from '@/components/ui';
 import { CountUp } from '@/components/effects';
 
@@ -105,18 +106,19 @@ export default function JobApplications() {
       <PageTitle>Everything you've sent.</PageTitle>
 
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {[
-          ['Applied', stats.applied],
-          ['In review', stats.review],
-          ['Interviews', stats.interviews],
-          ['Closed', stats.closed],
-        ].map(([label, n]) => (
-          <div key={label as string} className="card-surface p-4">
-            <div className="font-display text-2xl font-semibold text-parchment">
-              <CountUp to={n as number} />
-            </div>
-            <div className="text-xs text-slate">{label}</div>
-          </div>
+        {([
+          ['Applied', stats.applied, Send, 'var(--blue)'],
+          ['In review', stats.review, Eye, 'var(--orange)'],
+          ['Interviews', stats.interviews, CalendarCheck, 'var(--teal)'],
+          ['Closed', stats.closed, Archive, 'var(--slate)'],
+        ] as const).map(([label, n, icon, accent]) => (
+          <StatCard
+            key={label}
+            label={label}
+            icon={icon}
+            accent={accent}
+            value={<CountUp to={n} />}
+          />
         ))}
       </div>
 
@@ -171,7 +173,7 @@ export default function JobApplications() {
                   <Pill tone="green" className="hidden sm:inline-flex">
                     <CheckCircle2 size={11} /> Credentials verified ✓
                   </Pill>
-                  <Pill tone={meta.tone}>{meta.label}</Pill>
+                  <Pill tone={meta.tone} dot live={a.status === 'in_review' || a.status === 'interview'}>{meta.label}</Pill>
                   <ChevronDown size={16} className={`text-slate transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>

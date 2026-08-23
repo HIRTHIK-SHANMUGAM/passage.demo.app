@@ -76,7 +76,7 @@ export default function Onboarding() {
   const staffOptions = role === 'recruiter' ? companies : universities;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-ink p-6">
+    <div className="flex min-h-screen items-center justify-center p-6">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}

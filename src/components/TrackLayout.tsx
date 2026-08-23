@@ -262,7 +262,7 @@ export default function TrackLayout({ children }: { children: ReactNode }) {
   const isInstitutionTrack = track === 'hiring' || track === 'admissions';
 
   return (
-    <div className="flex min-h-screen flex-col bg-ink">
+    <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-30 border-b border-hairline bg-ink/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-6">
           <button onClick={() => navigate('/purpose')} aria-label="Passage home">

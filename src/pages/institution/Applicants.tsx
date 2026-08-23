@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { AlertCircle, CheckCircle2, Clock, Eye, Star, Users, X } from 'lucide-react';
+import { Eye, Star, Users, X } from 'lucide-react';
 import { useApp } from '@/state/AppContext';
 import * as db from '@/lib/db';
 import { ApplicantRow } from '@/lib/types';
@@ -253,18 +253,18 @@ export default function Applicants() {
                     </div>
 
                     {row.verification === 'verified' && (
-                      <Pill tone="green"><CheckCircle2 size={11} /> Credentials verified</Pill>
+                      <Pill tone="green" dot>Credentials verified</Pill>
                     )}
                     {row.verification === 'pending' && (
                       <span className="flex items-center gap-1.5">
-                        <Pill tone="orange"><Clock size={11} /> Verification pending</Pill>
+                        <Pill tone="orange" dot live>Verification pending</Pill>
                         <Button size="sm" variant="secondary" onClick={() => verifyNow(row, false)}>
                           Verify now
                         </Button>
                       </span>
                     )}
                     {row.verification === 'failed' && (
-                      <Pill tone="red"><AlertCircle size={11} /> Verification failed</Pill>
+                      <Pill tone="red" dot>Verification failed</Pill>
                     )}
 
                     {!isAdmissions && <MatchPct pct={row.matchPct} />}

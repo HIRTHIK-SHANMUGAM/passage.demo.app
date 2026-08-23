@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppProvider, useApp } from '@/state/AppContext';
 import { ToastProvider } from '@/components/ui';
 import TrackLayout from '@/components/TrackLayout';
+import CursorGlow from '@/components/CursorGlow';
 import Login from '@/pages/Login';
 import Onboarding from '@/pages/Onboarding';
 import PurposeSelection from '@/pages/PurposeSelection';
@@ -79,6 +80,8 @@ export default function App() {
   return (
     <ToastProvider>
       <AppProvider>
+        <CursorGlow />
+        <div className="app-shell">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/onboarding" element={<OnboardingGuard />} />
@@ -119,6 +122,7 @@ export default function App() {
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </div>
       </AppProvider>
     </ToastProvider>
   );

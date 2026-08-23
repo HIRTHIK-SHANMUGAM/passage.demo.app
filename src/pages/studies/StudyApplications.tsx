@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Check, ChevronDown, FileText, GraduationCap, ShieldCheck, UploadCloud, X } from 'lucide-react';
+import { Check, ChevronDown, FileText, GraduationCap, Hourglass, PenLine, Send, ShieldCheck, Star, UploadCloud, X } from 'lucide-react';
 import { useApp } from '@/state/AppContext';
 import * as db from '@/lib/db';
 import { Application, Credential, Program } from '@/lib/types';
@@ -15,6 +15,7 @@ import {
   Pill,
   PillTone,
   SkeletonRows,
+  StatCard,
   useToast,
 } from '@/components/ui';
 import { CountUp } from '@/components/effects';
@@ -240,18 +241,19 @@ export default function StudyApplications() {
       <PageTitle>Your applications, one desk.</PageTitle>
 
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {[
-          ['Shortlisted', stats.shortlisted],
-          ['Started', stats.started],
-          ['Submitted', stats.submitted],
-          ['Decision pending', stats.pending],
-        ].map(([label, n]) => (
-          <div key={label as string} className="card-surface p-4">
-            <div className="font-display text-2xl font-semibold text-parchment">
-              <CountUp to={n as number} />
-            </div>
-            <div className="text-xs text-slate">{label}</div>
-          </div>
+        {([
+          ['Shortlisted', stats.shortlisted, Star, 'var(--violet)'],
+          ['Started', stats.started, PenLine, 'var(--blue)'],
+          ['Submitted', stats.submitted, Send, 'var(--teal)'],
+          ['Decision pending', stats.pending, Hourglass, 'var(--orange)'],
+        ] as const).map(([label, n, icon, accent]) => (
+          <StatCard
+            key={label}
+            label={label}
+            icon={icon}
+            accent={accent}
+            value={<CountUp to={n} />}
+          />
         ))}
       </div>
 
@@ -302,7 +304,7 @@ export default function StudyApplications() {
                   {hasTranscriptCred && (
                     <Pill tone="green" className="hidden sm:inline-flex"><ShieldCheck size={11} /> Verified</Pill>
                   )}
-                  <Pill tone={meta.tone}>{meta.label}</Pill>
+                  <Pill tone={meta.tone} dot live={a.status === 'in_review'}>{meta.label}</Pill>
                   <ChevronDown size={16} className={`text-slate transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
 
