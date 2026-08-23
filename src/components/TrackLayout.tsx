@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Building2, Check, ChevronDown, LogOut, UserCircle2 } from 'lucide-react';
 import { useApp } from '@/state/AppContext';
@@ -243,6 +243,7 @@ function ScopeBanner() {
 export default function TrackLayout({ children }: { children: ReactNode }) {
   const { track, activeInstitution } = useApp();
   const navigate = useNavigate();
+  const location = useLocation();
   const [pendingRequests, setPendingRequests] = useState(0);
 
   useEffect(() => {
@@ -287,7 +288,11 @@ export default function TrackLayout({ children }: { children: ReactNode }) {
                       </span>
                     )}
                     {isActive && (
-                      <span className="absolute inset-x-2 -bottom-[13px] h-0.5 rounded-full bg-orange" />
+                      <motion.span
+                        layoutId="nav-underline"
+                        className="nav-underline absolute inset-x-2"
+                        transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      />
                     )}
                   </>
                 )}
@@ -318,7 +323,16 @@ export default function TrackLayout({ children }: { children: ReactNode }) {
 
       {isInstitutionTrack && <ScopeBanner />}
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 md:px-6">{children}</main>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 md:px-6">
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {children}
+        </motion.div>
+      </main>
     </div>
   );
 }

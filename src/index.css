@@ -300,19 +300,30 @@ input[type='range'].dual-thumb::-moz-range-thumb {
   top: 0;
   left: 0;
   z-index: 0;
-  width: 420px;
-  height: 420px;
+  width: 560px;
+  height: 560px;
   border-radius: 9999px;
   pointer-events: none;
   will-change: transform, opacity;
-  transition: opacity 500ms ease;
+  transition: opacity 450ms ease;
   background: radial-gradient(
     circle closest-side,
-    rgba(37, 99, 235, 0.11),
-    rgba(124, 58, 237, 0.06) 45%,
-    transparent 72%
+    rgba(37, 99, 235, 0.22),
+    rgba(124, 58, 237, 0.13) 40%,
+    rgba(13, 148, 136, 0.06) 62%,
+    transparent 78%
   );
-  filter: blur(14px);
+  filter: blur(8px);
+}
+
+/* a second, tighter core so the light has a bright centre */
+.cursor-glow::before {
+  content: '';
+  position: absolute;
+  inset: 32%;
+  border-radius: 9999px;
+  background: radial-gradient(circle closest-side, rgba(37, 99, 235, 0.28), transparent 70%);
+  filter: blur(6px);
 }
 
 /* Page content sits above the ambient light */
@@ -377,4 +388,57 @@ input[type='range'].dual-thumb::-moz-range-thumb {
 @media (prefers-reduced-motion: reduce) {
   .cursor-glow { display: none; }
   .skeleton-block::after { animation: none; }
+}
+
+/* ---- Primary button shine sweep (Uiverse pattern) ----
+   A light sweeps diagonally across primary buttons on hover. */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  transform: skewX(-20deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  transition: none;
+  pointer-events: none;
+}
+.btn-primary:hover::after {
+  animation: btn-shine 0.85s ease;
+}
+@keyframes btn-shine {
+  100% { left: 130%; }
+}
+
+/* ---- Animated nav underline (framer-motion drives the slide) ---- */
+.nav-underline {
+  position: absolute;
+  bottom: -13px;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--orange), var(--blue));
+}
+
+/* ---- StatCard trend chip ---- */
+.trend-up { color: var(--green); }
+.trend-down { color: var(--red); }
+
+/* ---- Card entrance: gentle rise (used via .rise on mount) ---- */
+@keyframes rise-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover::after { animation: none; }
 }
