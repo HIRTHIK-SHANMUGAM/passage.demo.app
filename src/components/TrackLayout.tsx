@@ -266,7 +266,7 @@ export default function TrackLayout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen flex-col">
       <header className="glass sticky top-0 z-30 border-b border-hairline">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-          <button onClick={() => navigate('/purpose')} aria-label="Passage home">
+          <button onClick={() => navigate('/purpose')} aria-label="Passage home" className="logo-aura">
             <LogoFull markSize={30} />
           </button>
           <nav className="hidden items-center gap-1 md:flex" aria-label="Track navigation">

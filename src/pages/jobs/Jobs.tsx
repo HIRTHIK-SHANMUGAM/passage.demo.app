@@ -13,6 +13,7 @@ import {
 import { useApp } from '@/state/AppContext';
 import * as db from '@/lib/db';
 import { Application, JobPosting } from '@/lib/types';
+import { MatchCard, MatchRing } from '@/components/MatchRing';
 import {
   AvatarCircle,
   Button,
@@ -23,7 +24,6 @@ import {
   Select,
   Skeleton,
   Textarea,
-  matchTone,
   useToast,
 } from '@/components/ui';
 
@@ -376,21 +376,18 @@ export default function Jobs() {
 
       {(() => {
         const pct = matchPctFor(selected);
-        const tone = matchTone(pct);
-        const color = tone === 'green' ? 'text-green border-green/30 bg-green/10' : tone === 'orange' ? 'text-orange border-orange/30 bg-orange/10' : 'text-slate border-hairline bg-ink-3/40';
         return (
-          <div className={`mt-5 flex items-center gap-3 rounded-card border p-3 ${color}`}>
-            <span className="font-display text-2xl font-semibold">{pct}%</span>
-            <div className="text-sm">
-              <div className="font-medium">Your match</div>
-              <div className="text-xs opacity-80">
-                {pct >= 85
+          <div className="mt-5">
+            <MatchCard
+              pct={pct}
+              reason={
+                pct >= 85
                   ? 'Your stack lines up almost exactly with what they list.'
                   : pct >= 70
                     ? 'Strong overlap on core skills; one or two gaps worth closing.'
-                    : 'Some overlap, but expect to explain the gaps.'}
-              </div>
-            </div>
+                    : 'Some overlap, but expect to explain the gaps.'
+              }
+            />
           </div>
         );
       })()}
@@ -426,19 +423,19 @@ export default function Jobs() {
       {/* search bar */}
       <div className="flex flex-col gap-3 sm:flex-row">
         <div className="relative flex-1">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate" />
+          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange" />
           <input
             value={keywordRaw}
             onChange={(e) => setKeywordRaw(e.target.value)}
             placeholder="Role, company or skill"
-            className="w-full rounded-btn border border-hairline bg-ink-3 py-2.5 pl-9 pr-3 text-sm text-parchment placeholder:text-slate-2"
+            className="input-3d w-full rounded-btn py-2.5 pl-9 pr-3 text-sm text-parchment placeholder:text-slate-2 outline-none"
           />
         </div>
         <input
           value={locationQ}
           onChange={(e) => setLocationQ(e.target.value)}
           placeholder="Location"
-          className="rounded-btn border border-hairline bg-ink-3 px-3 py-2.5 text-sm text-parchment placeholder:text-slate-2 sm:w-48"
+          className="input-3d rounded-btn px-3 py-2.5 text-sm text-parchment placeholder:text-slate-2 outline-none sm:w-48"
         />
         <Button onClick={() => setKeyword(keywordRaw)}>
           <Search size={14} /> Search
@@ -535,6 +532,7 @@ export default function Jobs() {
                         ))}
                       </div>
                     </div>
+                    <MatchRing pct={matchPctFor(j)} size={46} />
                   </div>
                 </motion.button>
               );

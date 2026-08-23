@@ -35,7 +35,9 @@ export default function CursorGlow() {
   const raf = useRef(0);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Only skip on touch devices (no hovering pointer). We intentionally do
+    // NOT skip for prefers-reduced-motion: many desktop users (esp. Windows
+    // with animations disabled) still want this signature cursor.
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
     document.documentElement.classList.add('custom-cursor-active');
