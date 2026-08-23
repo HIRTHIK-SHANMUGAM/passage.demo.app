@@ -505,7 +505,7 @@ export function MatchPct({ pct, className = '' }: { pct: number; className?: str
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-orange">
+    <div className="eyebrow-tick mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-orange">
       {children}
     </div>
   );
@@ -513,7 +513,7 @@ export function Eyebrow({ children }: { children: ReactNode }) {
 
 export function PageTitle({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <h1 className={`font-display text-3xl font-semibold text-parchment md:text-4xl ${className}`}>
+    <h1 className={`heading-gradient font-display text-3xl font-semibold md:text-4xl ${className}`}>
       {children}
     </h1>
   );

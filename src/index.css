@@ -54,7 +54,7 @@ body {
     linear-gradient(160deg, #ffffff 0%, #fbfdff 100%);
   border: 1px solid var(--hairline);
   border-radius: 18px;
-  box-shadow: 0 1px 3px rgba(22, 35, 63, 0.06);
+  box-shadow: 0 1px 2px rgba(22, 35, 63, 0.04), 0 8px 24px -12px rgba(22, 35, 63, 0.12);
   position: relative;
   --mx: 50%;
   --my: 50%;
@@ -293,8 +293,69 @@ input[type='range'].dual-thumb::-moz-range-thumb {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
-/* ---- Ambient cursor light (background only) ----
-   Sits behind all content and fades out over any real UI element. */
+/* ---- Custom cursor system (dot + trailing ring + ambient glow) ---- */
+
+/* Hide the native cursor only once the custom cursor is active on desktop.
+   Text inputs keep a normal caret when focused. */
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: var(--orange);
+  pointer-events: none;
+  will-change: transform;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--orange) 70%, transparent);
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  border: 1.5px solid color-mix(in srgb, var(--blue) 65%, transparent);
+  background: color-mix(in srgb, var(--blue) 5%, transparent);
+  pointer-events: none;
+  will-change: transform;
+  transition: width 0.25s ease, height 0.25s ease, background-color 0.25s ease,
+    border-color 0.25s ease, opacity 0.3s ease;
+}
+
+/* grows + tints over interactive elements */
+.cursor-ring.is-hovering {
+  width: 52px;
+  height: 52px;
+  border-color: color-mix(in srgb, var(--orange) 70%, transparent);
+  background: color-mix(in srgb, var(--orange) 9%, transparent);
+}
+
+/* collapses on click */
+.cursor-ring.is-down {
+  width: 24px;
+  height: 24px;
+  border-color: var(--orange);
+}
+
+/* only fine-pointer, non-touch, motion-ok users get the custom cursor */
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ---- Ambient cursor light (background only) ---- */
 .cursor-glow {
   position: fixed;
   top: 0;
@@ -441,4 +502,34 @@ input[type='range'].dual-thumb::-moz-range-thumb {
 
 @media (prefers-reduced-motion: reduce) {
   .btn-primary:hover::after { animation: none; }
+}
+
+
+/* ---- Premium polish ---- */
+
+/* Gradient display heading (opt-in via .heading-gradient) */
+.heading-gradient {
+  background: linear-gradient(100deg, var(--parchment) 0%, var(--blue) 55%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Frosted glass surface for the sticky nav */
+.glass {
+  background: color-mix(in srgb, var(--ink) 72%, transparent);
+  -webkit-backdrop-filter: saturate(150%) blur(12px);
+  backdrop-filter: saturate(150%) blur(12px);
+}
+
+/* Eyebrow gets a small gradient tick before it */
+.eyebrow-tick::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--orange), var(--blue));
 }
