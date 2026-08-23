@@ -1,0 +1,592 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light theme. Palette anchored on the Tailwind CSS color system
+   (blue-600 family) with the brand orange as its complementary accent;
+   violet and teal as supporting accents. */
+:root {
+  --ink: #f1f5fb; /* page background — cool blue-tinted white */
+  --ink-2: #ffffff; /* cards, panels */
+  --ink-3: #e6edf7; /* inputs, table headers, hover */
+  --parchment: #16233f; /* primary text — deep navy */
+  --orange: #e75c2b;
+  --orange-dim: #c64a20;
+  --green: #047857;
+  --amber: #b45309;
+  --red: #dc2626;
+  --slate: #5a6b85; /* secondary text */
+  --slate-2: #8494ab; /* tertiary text */
+  --blue: #2563eb;
+  --violet: #7c3aed;
+  --teal: #0d9488;
+  --hairline: rgba(22, 35, 63, 0.12);
+  --hairline-strong: rgba(22, 35, 63, 0.24);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--ink);
+  color: var(--parchment);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.22);
+}
+
+.card-surface {
+  background:
+    radial-gradient(60% 50% at 100% 0%, rgba(37, 99, 235, 0.05), transparent 70%),
+    radial-gradient(50% 40% at 0% 100%, rgba(231, 92, 43, 0.04), transparent 70%),
+    linear-gradient(160deg, #ffffff 0%, #fbfdff 100%);
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(22, 35, 63, 0.04), 0 8px 24px -12px rgba(22, 35, 63, 0.12);
+  position: relative;
+  --mx: 50%;
+  --my: 50%;
+}
+
+.card-surface:hover {
+  border-color: var(--hairline-strong);
+}
+
+/* Cursor-tracking spotlight (adapted from React Bits SpotlightCard, MIT).
+   A single delegate in App.tsx updates --mx/--my on the hovered card. */
+.card-surface::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    rgba(37, 99, 235, 0.09),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card-surface:hover::after {
+  opacity: 1;
+}
+
+/* Shiny text sweep (adapted from React Bits ShinyText, MIT) */
+.shiny-text {
+  display: inline-block;
+  color: transparent;
+  background:
+    linear-gradient(
+      120deg,
+      var(--orange) 40%,
+      #ffb68f 50%,
+      var(--orange) 60%
+    );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shiny-sweep 3s linear infinite;
+}
+
+@keyframes shiny-sweep {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+/* Star border — orbiting edge glow (adapted from React Bits StarBorder, MIT) */
+.star-border-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 13px;
+  padding: 1.5px;
+}
+
+.star-border-gradient {
+  position: absolute;
+  width: 300%;
+  height: 50%;
+  opacity: 0.8;
+  z-index: 0;
+  border-radius: 50%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.star-border-bottom {
+  bottom: -12px;
+  right: -250%;
+  animation-name: star-movement-bottom;
+}
+
+.star-border-top {
+  top: -12px;
+  left: -250%;
+  animation-name: star-movement-top;
+}
+
+@keyframes star-movement-bottom {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(-100%, 0); opacity: 0; }
+}
+
+@keyframes star-movement-top {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(100%, 0); opacity: 0; }
+}
+
+.star-border-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: 11.5px;
+  background: var(--ink-2);
+}
+
+/* Gradient icon chips with a hover glow. --chip sets the accent colour
+   (defaults to blue); icons inside inherit it via currentColor helpers. */
+.icon-chip {
+  --chip: var(--blue);
+  color: var(--chip);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--chip) 18%, transparent),
+    color-mix(in srgb, var(--chip) 5%, transparent)
+  );
+  border: 1px solid color-mix(in srgb, var(--chip) 32%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.icon-chip svg {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.group:hover .icon-chip,
+.icon-chip:hover {
+  transform: translateY(-2px) scale(1.08) rotate(-4deg);
+  border-color: color-mix(in srgb, var(--chip) 60%, transparent);
+  box-shadow:
+    0 0 20px color-mix(in srgb, var(--chip) 30%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.group:hover .icon-chip svg,
+.icon-chip:hover svg {
+  transform: scale(1.12);
+}
+
+/* Institution seal circles glow when their card is hovered */
+.seal-circle {
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.group:hover .seal-circle,
+.card-surface:hover .seal-circle {
+  border-color: rgba(231, 92, 43, 0.7);
+  box-shadow: 0 0 16px rgba(231, 92, 43, 0.3);
+  transform: scale(1.06);
+}
+
+/* Twinkle for the sparkle in the logo mark */
+.logo-sparkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sparkle-twinkle 2.6s ease-in-out infinite;
+}
+
+@keyframes sparkle-twinkle {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.55; transform: scale(0.78) rotate(22deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shiny-text,
+  .star-border-gradient,
+  .logo-sparkle,
+  .skeleton-block,
+  .pulse-dot {
+    animation: none;
+  }
+  .icon-chip,
+  .seal-circle {
+    transition: none;
+  }
+}
+
+/* thin scrollbars for panel lists */
+.thin-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: var(--ink-3);
+  border-radius: 8px;
+}
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.skeleton-block {
+  background: var(--ink-3);
+  border-radius: 8px;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+/* dual range slider thumbs */
+input[type='range'].dual-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: none;
+  background: transparent;
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+}
+input[type='range'].dual-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--parchment);
+  border: 3px solid var(--orange);
+  cursor: grab;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+input[type='range'].dual-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--parchment);
+  border: 3px solid var(--orange);
+  cursor: grab;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Page content sits above the ambient light */
+.app-shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Skeleton shimmer (Uiverse-style sweep, replaces the flat pulse) ---- */
+.skeleton-block {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-3);
+  animation: none;
+}
+.skeleton-block::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+  animation: skeleton-sweep 1.6s ease-in-out infinite;
+}
+
+@keyframes skeleton-sweep {
+  100% { transform: translateX(100%); }
+}
+
+/* ---- Untitled UI style status dot inside pills ---- */
+.pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* a soft halo so "live" states read as active, not decorative */
+.pill-dot-live {
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent);
+}
+
+/* ---- Featured icon (Untitled UI): icon in a tinted, ringed square ---- */
+.featured-icon {
+  --chip: var(--blue);
+  color: var(--chip);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--chip) 12%, transparent);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--chip) 7%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block::after { animation: none; }
+}
+
+/* ---- Primary button shine sweep (Uiverse pattern) ----
+   A light sweeps diagonally across primary buttons on hover. */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  transform: skewX(-20deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  transition: none;
+  pointer-events: none;
+}
+.btn-primary:hover::after {
+  animation: btn-shine 0.85s ease;
+}
+@keyframes btn-shine {
+  100% { left: 130%; }
+}
+
+/* ---- Animated nav underline (framer-motion drives the slide) ---- */
+.nav-underline {
+  position: absolute;
+  bottom: -13px;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--orange), var(--blue));
+}
+
+/* ---- StatCard trend chip ---- */
+.trend-up { color: var(--green); }
+.trend-down { color: var(--red); }
+
+/* ---- Card entrance: gentle rise (used via .rise on mount) ---- */
+@keyframes rise-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary:hover::after { animation: none; }
+}
+
+
+/* ---- Premium polish ---- */
+
+/* Gradient display heading (opt-in via .heading-gradient) */
+.heading-gradient {
+  background: linear-gradient(100deg, var(--parchment) 0%, var(--blue) 55%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Frosted glass surface for the sticky nav */
+.glass {
+  background: color-mix(in srgb, var(--ink) 72%, transparent);
+  -webkit-backdrop-filter: saturate(150%) blur(12px);
+  backdrop-filter: saturate(150%) blur(12px);
+}
+
+/* Eyebrow gets a small gradient tick before it */
+.eyebrow-tick::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--orange), var(--blue));
+}
+
+/* ============================================================
+   Batch: aurora background, glass nav, logo glow, 3D inputs,
+   dynamic match ring — inspired by Motion Array background
+   loops + Uiverse / Untitled UI component styling.
+   ============================================================ */
+
+/* ---- Animated aurora background (Motion Array "background loop") ---- */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.aurora span {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.5;
+  will-change: transform;
+}
+.aurora .a1 {
+  width: 42vw; height: 42vw;
+  left: -8vw; top: -10vw;
+  background: radial-gradient(circle, rgba(37,99,235,0.35), transparent 60%);
+  animation: drift1 22s ease-in-out infinite alternate;
+}
+.aurora .a2 {
+  width: 38vw; height: 38vw;
+  right: -6vw; top: 4vw;
+  background: radial-gradient(circle, rgba(124,58,237,0.28), transparent 60%);
+  animation: drift2 26s ease-in-out infinite alternate;
+}
+.aurora .a3 {
+  width: 34vw; height: 34vw;
+  left: 30vw; bottom: -14vw;
+  background: radial-gradient(circle, rgba(231,92,43,0.20), transparent 60%);
+  animation: drift3 30s ease-in-out infinite alternate;
+}
+@keyframes drift1 { to { transform: translate3d(12vw, 8vh, 0) scale(1.15); } }
+@keyframes drift2 { to { transform: translate3d(-10vw, 12vh, 0) scale(1.1); } }
+@keyframes drift3 { to { transform: translate3d(8vw, -10vh, 0) scale(1.2); } }
+
+/* ---- Stronger frosted glass nav ---- */
+.glass {
+  background: color-mix(in srgb, #ffffff 35%, transparent);
+  -webkit-backdrop-filter: saturate(200%) blur(24px);
+  backdrop-filter: saturate(200%) blur(24px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 8px 32px -12px rgba(22, 35, 63, 0.2);
+}
+
+/* ---- Translucent orange essence behind the logo + wordmark ---- */
+.logo-aura {
+  position: relative;
+}
+.logo-aura::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 190px;
+  height: 64px;
+  transform: translateY(-50%);
+  border-radius: 9999px;
+  background: radial-gradient(60% 80% at 20% 50%, rgba(231, 92, 43, 0.28), transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: -1;
+  animation: aura-breathe 4.5s ease-in-out infinite;
+}
+@keyframes aura-breathe {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+/* ---- 3D depth inputs (search bars + fields) ---- */
+.input-3d {
+  background: linear-gradient(180deg, #eef3fb 0%, #ffffff 100%);
+  border: 1px solid var(--hairline);
+  box-shadow:
+    inset 0 2px 4px rgba(22, 35, 63, 0.08),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.input-3d:focus-within,
+.input-3d:focus {
+  border-color: color-mix(in srgb, var(--blue) 55%, transparent);
+  box-shadow:
+    inset 0 2px 4px rgba(22, 35, 63, 0.06),
+    0 0 0 3px color-mix(in srgb, var(--blue) 16%, transparent),
+    0 4px 12px -4px rgba(37, 99, 235, 0.3);
+}
+
+/* ---- 3D icon tiles (small icons get a raised, glossy shape) ---- */
+.icon-3d {
+  --chip: var(--blue);
+  color: var(--chip);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--chip) 22%, #ffffff) 0%,
+    color-mix(in srgb, var(--chip) 8%, #ffffff) 100%);
+  border: 1px solid color-mix(in srgb, var(--chip) 30%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -3px 6px color-mix(in srgb, var(--chip) 18%, transparent),
+    0 4px 10px -3px color-mix(in srgb, var(--chip) 35%, transparent);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+.icon-3d:hover,
+.group:hover .icon-3d {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -3px 8px color-mix(in srgb, var(--chip) 24%, transparent),
+    0 8px 18px -4px color-mix(in srgb, var(--chip) 45%, transparent);
+}
+
+/* ---- Dynamic match ring card (conic progress + spinning sheen) ---- */
+.match-ring {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+  /* --pct (0-100) and --ring set by inline style */
+  background:
+    radial-gradient(closest-side, #ffffff 78%, transparent 79% 100%),
+    conic-gradient(var(--ring) calc(var(--pct) * 1%), var(--ink-3) 0);
+  box-shadow: 0 0 0 1px var(--hairline), 0 6px 16px -8px rgba(22, 35, 63, 0.35);
+}
+.match-ring::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  background: conic-gradient(from 0deg, transparent, color-mix(in srgb, var(--ring) 55%, transparent), transparent 40%);
+  animation: ring-spin 3.5s linear infinite;
+  z-index: -1;
+  opacity: 0.7;
+}
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+.match-ring .match-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
